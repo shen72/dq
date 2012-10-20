@@ -1,0 +1,11 @@
+package dq;
+
+message QuantDim {
+  optional fixed32 size = 1;
+  repeated double data = 2;
+}
+
+message QuantTable {
+  optional fixed32 dim_num = 1;
+  repeated QuantDim dims = 2;
+}
