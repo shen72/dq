@@ -1,0 +1,5 @@
+Program('testmat', ['testmat.cc', '../matlab_util.cc'],
+  LIBS = 'matio',
+  LIBPATH = ['/usr/local/lib'],
+  CPPPATH = '..',
+  CCFLAGS = '-std=c++0x')
