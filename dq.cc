@@ -1,5 +1,8 @@
 #include "dq.h"
+
 #include "kmeans1d.h"
+
+#include <algorithm>
 
 namespace dq {
 
@@ -40,4 +43,44 @@ void DQTrainer::train_dim(const vector<double>& sample_dim,
     dim_table->add_data(centers[i]);
   }
 }
+
+
+//=============DQMapper==============
+
+DQMapper::DQMapper(const QuantTable& table) {
+  Load(table);
 }
+
+void DQMapper::Load(const QuantTable& table) {
+  dim_ = table.dim_num();
+  quant_table_ = vector<vector<double> > (dim_);
+  for (size_t i = 0; i < dim_; i++) {
+    const QuantDim& curr_dim = table.dims(i);
+    size_t len = curr_dim.size();
+     for (size_t j = 0; j < len; j++) {
+      quant_table_[i].push_back(curr_dim.data(j));
+    }
+  } 
+}
+
+void DQMapper::Map(const vector<double>& old_v,
+                   vector<double>* new_v) {
+  CHECK(old_v.size() == dim_);
+  new_v->resize(dim_);
+
+  for (size_t i = 0; i < dim_; i++) {
+    const vector<double>& curr_table = quant_table_[i];
+    vector<double>::const_iterator it = lower_bound(
+        curr_table.begin(), curr_table.end(), old_v[i]);
+    if (it == curr_table.end()) {
+      (*new_v)[i] = *(it-1);
+    } else if (it == curr_table.begin() ||
+               *it - old_v[i] < old_v[i] - *(it - 1)) {
+      (*new_v)[i] = *it;
+    } else {
+      (*new_v)[i] = *(it - 1);
+    }
+  }
+}
+
+} // namespace dq

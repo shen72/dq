@@ -21,6 +21,22 @@ class DQTrainer {
 
   DISALLOW_COPY_AND_ASSIGN(DQTrainer); 
 };
+
+class DQMapper {
+ public:
+  DQMapper() {}
+  explicit DQMapper(const QuantTable& table);
+  void Load(const QuantTable& table);
+
+  void Map(const vector<double>& old_v, vector<double>* new_v);
+  
+ private:
+  vector<vector<double> > quant_table_;
+  size_t dim_;
+
+  DISALLOW_COPY_AND_ASSIGN(DQMapper);
+};
+
 }
 
 #endif /* DQ_H */

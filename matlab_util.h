@@ -10,8 +10,11 @@ using std::vector;
 void ReadMatOrDie(const string& mat_file_name,
                   const string& mat_name,
                   vector<vector<double> >* contents,
-                  int* row_n = 0,
-                  int* col_n = 0);
+                  size_t* row_n = 0,
+                  size_t* col_n = 0);
 
+void WriteMatOrDie(const vector<vector<double> >& contents,
+                   const string& mat_file_name, 
+                   const string& mat_name);
 
 #endif /* MATLAB_UTIL_H */

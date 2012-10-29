@@ -10,3 +10,12 @@
 *.lai
 *.la
 *.a
+
+# protobuf
+*.pb.*
+
+# scons dblite
+*.dblite
+
+# vim swp
+*.swp
