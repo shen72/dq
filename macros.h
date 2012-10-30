@@ -7,11 +7,15 @@
   void operator = (const ClassName&); 
 #endif
 
+#ifndef NO_GLOG
+#include <glog/logging.h>
+#else
 #ifndef CHECK
 #define CHECK(Phrase) \
   { auto v__ = Phrase; \
     if (!v__) { exit(-1); } \
   }
+#endif
 #endif
 
 #endif /* STEVENSHEN_MACRO_H */

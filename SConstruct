@@ -4,7 +4,7 @@ Program('dq_train',
     'dq_quant.pb.cc',
     'matlab_util.cc'
   ],
-  LIBS = ['matio', 'gflags', 'protobuf'],
+  LIBS = ['matio', 'gflags', 'glog', 'protobuf'],
   LIBPATH = ['/usr/local/lib'],
   CCFLAGS = '-std=c++0x')
 
@@ -14,7 +14,7 @@ Program('dq_mapping',
     'dq_quant.pb.cc',
     'matlab_util.cc'
   ],
-  LIBS = ['matio', 'gflags', 'protobuf'],
+  LIBS = ['matio', 'gflags', 'glog', 'protobuf'],
   LIBPATH = ['/usr/local/lib'],
   CCFLAGS = '-std=c++0x')
 
