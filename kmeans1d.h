@@ -25,8 +25,10 @@ class kmeans1d {
     vector<int> id(n);
     vector<int> counting(kcenter);
     vector<T> new_centers(kcenter);
- 
+    
+    init_centers(samples, centers, kcenter);
     for (int it_no = 0; it_no < iteration_limit; it_no++) {
+      DLOG(INFO) << "Iteration #" << it_no << endl;
       fill(new_centers.begin(), new_centers.end(), static_cast<T>(0));
       fill(counting.begin(), counting.end(), 0);
       int j = 0;

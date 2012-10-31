@@ -26,6 +26,7 @@ int main(int argc, char* argv[]) {
   
   ReadMatOrDie(FLAGS_train, FLAGS_mat, &train_repo, &n, &m);
 
+  DLOG(INFO) << "Done reading mat into library" << endl;
   DQTrainer trainer;
   QuantTable table;
   trainer.Train(train_repo, &table, FLAGS_nbins);

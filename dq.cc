@@ -19,12 +19,14 @@ void DQTrainer::Train(const vector<vector<double> >& sample,
   table->set_dim_num(dim);
   vector<double> perdim(n);
   for (int i = 0; i < dim; i++) {
+    DLOG(INFO) << "Start training Dim #" << i << "\t";
     for (int j = 0; j < n; j++) {
       perdim[j] = sample[i][j];
     }
 
     QuantDim dim_table;
     train_dim(perdim, &dim_table, nbins);
+    DLOG(INFO) << "Done" << endl;
     table->add_dims()->CopyFrom(dim_table);
   }
 }
