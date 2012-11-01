@@ -11,7 +11,7 @@ namespace dq {
 
 using namespace std;
 
-template<class T>
+template<typename T>
 class kmeans1d {
  public:
   kmeans1d() {}
@@ -22,14 +22,16 @@ class kmeans1d {
     vector<T> sorted(samples);
     int n = samples.size();
     sort(sorted.begin(), sorted.end());
+    DLOG(INFO) << "Min value: " << *(sorted.begin()) << " "
+        << "Max value: " << *(sorted.end() - 1) << endl;
     vector<int> id(n);
     vector<int> counting(kcenter);
     vector<T> new_centers(kcenter);
     
-    init_centers(samples, centers, kcenter);
+    init_centers(sorted, centers, kcenter, true);
     for (int it_no = 0; it_no < iteration_limit; it_no++) {
       DLOG(INFO) << "Iteration #" << it_no << endl;
-      fill(new_centers.begin(), new_centers.end(), static_cast<T>(0));
+      fill(new_centers.begin(), new_centers.end(), static_cast<T>(0.0));
       fill(counting.begin(), counting.end(), 0);
       int j = 0;
       for (int i = 0; i < n; i++) {
@@ -53,11 +55,24 @@ class kmeans1d {
     }
   }
 
+  static T map(const T& q, const vector<T>& table) {
+    typename vector<T>::const_iterator it = lower_bound(
+        table.begin(), table.end(), q);
+    if (it == table.end()) {
+      return *(it-1);
+    } else if (it == table.begin() || *it - q < q - *(it-1)) {
+      return *it;
+    } else {
+      return *(it-1);
+    }
+  }
+
+
  private:
   virtual void init_centers(const vector<T>& samples, 
                             vector<T>* centers,
                             int kcenter, bool issorted = false) {
-    int n = samples.size();
+    size_t n = samples.size();
     CHECK(n > 0 && kcenter > 0);
 
     centers->resize(kcenter);
@@ -75,7 +90,7 @@ class kmeans1d {
     }
 
     for (int i = 0; i < kcenter; i++) {
-      (*centers)[i] = samples[n * i / kcenter];
+      (*centers)[i] = (*sorted)[n * i / kcenter];
     }
   }
 

@@ -21,7 +21,7 @@ void DQTrainer::Train(const vector<vector<double> >& sample,
   for (int i = 0; i < dim; i++) {
     DLOG(INFO) << "Start training Dim #" << i << "\t";
     for (int j = 0; j < n; j++) {
-      perdim[j] = sample[i][j];
+      perdim[j] = sample[j][i];
     }
 
     QuantDim dim_table;
@@ -72,16 +72,7 @@ void DQMapper::Map(const vector<double>& old_v,
 
   for (size_t i = 0; i < dim_; i++) {
     const vector<double>& curr_table = quant_table_[i];
-    vector<double>::const_iterator it = lower_bound(
-        curr_table.begin(), curr_table.end(), old_v[i]);
-    if (it == curr_table.end()) {
-      (*new_v)[i] = *(it-1);
-    } else if (it == curr_table.begin() ||
-               *it - old_v[i] < old_v[i] - *(it - 1)) {
-      (*new_v)[i] = *it;
-    } else {
-      (*new_v)[i] = *(it - 1);
-    }
+    (*new_v)[i] = kmeans1d<double>::map(old_v[i], curr_table);
   }
 }
 

@@ -18,3 +18,11 @@ Program('dq_mapping',
   LIBPATH = ['/usr/local/lib'],
   CCFLAGS = '-std=c++0x')
 
+Program('table_view',
+  [ 'table_view.cc',
+    'dq_quant.pb.cc',
+  ],
+  LIBS = ['gflags', 'glog', 'protobuf'],
+  LIBPATH = ['/usr/local/lib'],
+  CCFLAGS = '-std=c++0x')
+

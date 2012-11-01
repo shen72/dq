@@ -14,10 +14,13 @@ void ReadMatOrDie(const string& mat_file_name,
                   vector<vector<double> >* contents,
                   size_t* row_n, size_t* col_n) {
   mat_t* matfp;
-  CHECK(matfp = Mat_Open(mat_file_name.c_str(), MAT_ACC_RDONLY));
+  CHECK(matfp = Mat_Open(mat_file_name.c_str(), MAT_ACC_RDONLY))
+      << "Open " << mat_file_name << " failed" << endl;
 
   matvar_t* matp;
-  CHECK(matp = Mat_VarRead(matfp, mat_name.c_str()));
+  CHECK(matp = Mat_VarRead(matfp, mat_name.c_str()))
+      << "Reading " << mat_name << " from " << mat_file_name << " failed"
+      << endl;
 
   CHECK(matp->rank == 2);
   size_t rows = matp->dims[0];

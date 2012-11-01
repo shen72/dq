@@ -1,5 +1,11 @@
 Program('testmat', ['testmat.cc', '../matlab_util.cc'],
-  LIBS = 'matio',
+  LIBS = ['matio', 'glog'],
+  LIBPATH = ['/usr/local/lib'],
+  CPPPATH = '..',
+  CCFLAGS = '-std=c++0x')
+
+Program('testmat_sw', ['testmat_sw.cc', '../matlab_util.cc'],
+  LIBS = ['matio', 'gflags', 'glog'],
   LIBPATH = ['/usr/local/lib'],
   CPPPATH = '..',
   CCFLAGS = '-std=c++0x')
