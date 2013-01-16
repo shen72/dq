@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
   QuantTable table;
   trainer.Train(train_repo, &table, FLAGS_nbins);
 
-  ofstream out_s(FLAGS_quant, ios::out | ios::binary);
+  ofstream out_s(FLAGS_quant.c_str(), ios::out | ios::binary);
   CHECK(table.SerializeToOstream(&out_s));
   out_s.close();
 }

@@ -1,4 +1,12 @@
-Program('dq_train',
+import os
+
+env = Environment(
+  ENV = {'PATH' : os.environ['PATH']}
+)
+env.Replace(CC = 'clang++')
+env.Replace(CXX = 'clang++')
+
+env.Program('dq_train',
   [ 'dq_train.cc',
     'dq.cc',
     'dq_quant.pb.cc',
@@ -8,7 +16,7 @@ Program('dq_train',
   LIBPATH = ['/usr/local/lib'],
   CCFLAGS = '-std=c++0x')
 
-Program('dq_mapping',
+env.Program('dq_mapping',
   [ 'dq_mapping.cc',
     'dq.cc',
     'dq_quant.pb.cc',
@@ -18,7 +26,7 @@ Program('dq_mapping',
   LIBPATH = ['/usr/local/lib'],
   CCFLAGS = '-std=c++0x')
 
-Program('table_view',
+env.Program('table_view',
   [ 'table_view.cc',
     'dq_quant.pb.cc',
   ],

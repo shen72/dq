@@ -13,7 +13,7 @@ DEFINE_string(quant, "", "Quant Filename");
 int main(int argc, char* argv[]) {
   google::ParseCommandLineFlags(&argc, &argv, true);
   CHECK(FLAGS_quant != "");
-  ifstream fin(FLAGS_quant, ios::in | ios::binary);
+  ifstream fin(FLAGS_quant.c_str(), ios::in | ios::binary);
 
   QuantTable table;
   table.ParseFromIstream(&fin);

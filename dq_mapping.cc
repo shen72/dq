@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
         FLAGS_quant != "");
 
   QuantTable table;
-  ifstream quant_s(FLAGS_quant, ios::in | ios::binary);
+  ifstream quant_s(FLAGS_quant.c_str(), ios::in | ios::binary);
   table.ParseFromIstream(&quant_s);
 
   vector<vector<double> > input_samples;
